@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loan Mitra Project Report Calculator</title>
+<style>
+body{font-family:Arial;padding:20px;max-width:500px;margin:auto}
+input,button{width:100%;padding:12px;margin:10px 0}
+.result{background:#f3f3f3;padding:15px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<h2>Loan Mitra Project Report Calculator</h2>
+
+<input type="number" id="loan" placeholder="Enter Loan Amount">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result">
+<p><b>Project Report Fee:</b> ₹<span id="fee">0</span></p>
+<p><b>GST (18%):</b> ₹<span id="gst">0</span></p>
+<p><b>Total:</b> ₹<span id="total">0</span></p>
+</div>
+
+<script>
+function calculate(){
+let loan=parseFloat(document.getElementById("loan").value)||0;
+
+let fee=Math.round(Math.max(3000,3000+((loan-100000)*22000/4900000)));
+let gst=Math.round(fee*0.18);
+let total=fee+gst;
+
+document.getElementById("fee").innerText=fee.toLocaleString();
+document.getElementById("gst").innerText=gst.toLocaleString();
+document.getElementById("total").innerText=total.toLocaleString();
+}
+</script>
+
+</body>
+</html>
