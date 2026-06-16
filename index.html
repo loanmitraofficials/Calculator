@@ -1,118 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loan Mitra - Project Report Calculator</title>
+<title>Loan Mitra Calculator</title>
 
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
-    margin:0;
-    padding:20px;
-    background:#f2f2f2;
-    font-family:Arial, sans-serif;
-    text-align:center;
+background:#f5f5f5;
+padding:15px;
 }
 
 .container{
-    max-width:700px;
-    margin:auto;
+max-width:500px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.15);
 }
 
 h1{
-    font-size:70px;
-    margin-top:30px;
-    margin-bottom:20px;
+text-align:center;
+font-size:38px;
+margin-bottom:10px;
 }
 
 h2{
-    font-size:40px;
-    margin-bottom:30px;
+text-align:center;
+font-size:24px;
+margin-bottom:20px;
 }
 
-input{
-    width:80%;
-    max-width:350px;
-    padding:12px;
-    font-size:24px;
-    text-align:center;
-    border:2px solid #000;
-    border-radius:5px;
+input,select{
+width:100%;
+padding:12px;
+margin:8px 0;
+font-size:16px;
+border:1px solid #ccc;
+border-radius:6px;
 }
 
 button{
-    margin-top:30px;
-    padding:12px 40px;
-    font-size:32px;
-    font-weight:bold;
-    cursor:pointer;
-    border:none;
-    border-radius:8px;
-    background:#000;
-    color:white;
-}
-
-button:hover{
-    opacity:0.9;
+width:100%;
+padding:14px;
+font-size:18px;
+font-weight:bold;
+background:#25D366;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
 }
 
 .result{
-    margin-top:60px;
-    display:flex;
-    justify-content:center;
+margin-top:20px;
+padding:15px;
+background:#f7f7f7;
+border-radius:8px;
 }
 
-table{
-    border-spacing:20px 25px;
-    font-size:24px;
-    font-weight:bold;
+.row{
+display:flex;
+justify-content:space-between;
+margin:10px 0;
+font-size:18px;
+font-weight:bold;
 }
 
-td{
-    text-align:left;
+#sendBtn{
+display:none;
+text-decoration:none;
+text-align:center;
+margin-top:15px;
 }
 
-.value{
-    min-width:120px;
-    text-align:right;
-}
-
-.whatsapp-btn{
-    display:none;
-    margin-top:30px;
-    background:#25D366;
-    color:white;
-    text-decoration:none;
-    padding:15px 25px;
-    border-radius:8px;
-    font-size:22px;
-    font-weight:bold;
-}
-
-@media(max-width:600px){
-
-h1{
-    font-size:45px;
-}
-
-h2{
-    font-size:28px;
-}
-
-input{
-    width:90%;
-    font-size:20px;
-}
-
-button{
-    font-size:24px;
-}
-
-table{
-    font-size:20px;
-}
+@media(max-width:480px){
+h1{font-size:30px;}
+h2{font-size:20px;}
+.row{font-size:16px;}
 }
 </style>
+
 </head>
 
 <body>
@@ -120,43 +98,39 @@ table{
 <div class="container">
 
 <h1>Loan Mitra</h1>
-
 <h2>Project Report Calculator</h2>
 
-<input type="number" id="loan" placeholder="Enter Desired Amount">
+<input type="text" id="name" placeholder="Enter Name">
 
-<br>
+<input type="text" id="state" placeholder="Enter State">
+
+<input type="text" id="district" placeholder="Enter District">
+
+<input type="number" id="loan" placeholder="Enter Desired Loan Amount">
 
 <button onclick="calculate()">Calculate</button>
 
 <div class="result">
-<table>
 
-<tr>
-<td>Project Report Fee</td>
-<td>:</td>
-<td class="value" id="fee">0</td>
-</tr>
-
-<tr>
-<td>GST (18%)</td>
-<td>:</td>
-<td class="value" id="gst">0</td>
-</tr>
-
-<tr>
-<td>Total</td>
-<td>:</td>
-<td class="value" id="total">0</td>
-</tr>
-
-</table>
+<div class="row">
+<span>Project Report Fee</span>
+<span id="fee">0</span>
 </div>
 
-<a id="waBtn"
-class="whatsapp-btn"
-target="_blank">
-Apply on WhatsApp
+<div class="row">
+<span>GST (18%)</span>
+<span id="gst">0</span>
+</div>
+
+<div class="row">
+<span>Total</span>
+<span id="total">0</span>
+</div>
+
+</div>
+
+<a id="sendBtn">
+<button>Send on WhatsApp</button>
 </a>
 
 </div>
@@ -165,46 +139,46 @@ Apply on WhatsApp
 
 function calculate(){
 
-let loan = parseFloat(document.getElementById("loan").value);
+let name=document.getElementById("name").value;
+let state=document.getElementById("state").value;
+let district=document.getElementById("district").value;
+let loan=parseFloat(document.getElementById("loan").value);
 
-if(!loan || loan <= 0){
-alert("Please enter loan amount");
+if(!name || !state || !district || !loan){
+alert("Please fill all details");
 return;
 }
 
-let fee = Math.round(
+let fee=Math.round(
 Math.max(
 3000,
-3000 + ((loan - 100000) * 22000 / 4900000)
+3000+((loan-100000)*22000/4900000)
 )
 );
 
-let gst = Math.round(fee * 0.18);
-let total = fee + gst;
+let gst=Math.round(fee*0.18);
+let total=fee+gst;
 
-document.getElementById("fee").innerHTML =
-fee.toLocaleString('en-IN');
-
-document.getElementById("gst").innerHTML =
-gst.toLocaleString('en-IN');
-
-document.getElementById("total").innerHTML =
-total.toLocaleString('en-IN');
+document.getElementById("fee").innerHTML="₹"+fee.toLocaleString('en-IN');
+document.getElementById("gst").innerHTML="₹"+gst.toLocaleString('en-IN');
+document.getElementById("total").innerHTML="₹"+total.toLocaleString('en-IN');
 
 let msg =
-"Loan Mitra Inquiry%0A%0A" +
-"Loan Amount: ₹" + loan.toLocaleString('en-IN') + "%0A" +
-"Project Report Fee: ₹" + fee.toLocaleString('en-IN') + "%0A" +
-"GST: ₹" + gst.toLocaleString('en-IN') + "%0A" +
-"Total: ₹" + total.toLocaleString('en-IN');
+"*Loan Mitra New Inquiry*%0A%0A"+
+"Name: "+name+"%0A"+
+"State: "+state+"%0A"+
+"District: "+district+"%0A"+
+"Loan Amount: ₹"+loan.toLocaleString('en-IN')+"%0A"+
+"Project Report Fee: ₹"+fee.toLocaleString('en-IN')+"%0A"+
+"GST: ₹"+gst.toLocaleString('en-IN')+"%0A"+
+"Total: ₹"+total.toLocaleString('en-IN');
 
-let waLink =
-"https://wa.me/918051656696?text=" + msg;
+let whatsappLink =
+"https://wa.me/918051656696?text="+msg;
 
-let waBtn = document.getElementById("waBtn");
-
-waBtn.href = waLink;
-waBtn.style.display = "inline-block";
+let sendBtn=document.getElementById("sendBtn");
+sendBtn.href=whatsappLink;
+sendBtn.style.display="block";
 }
 
 </script>
