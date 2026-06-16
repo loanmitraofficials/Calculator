@@ -1,41 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Loan Mitra Project Report Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Mitra - Project Report Calculator</title>
+
 <style>
-body{font-family:Arial;padding:20px;max-width:500px;margin:auto}
-input,button{width:100%;padding:12px;margin:10px 0}
-.result{background:#f3f3f3;padding:15px;border-radius:10px}
+body{
+    margin:0;
+    padding:20px;
+    background:#f2f2f2;
+    font-family:Arial, sans-serif;
+    text-align:center;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+h1{
+    font-size:70px;
+    margin-top:30px;
+    margin-bottom:20px;
+}
+
+h2{
+    font-size:40px;
+    margin-bottom:30px;
+}
+
+input{
+    width:80%;
+    max-width:350px;
+    padding:12px;
+    font-size:24px;
+    text-align:center;
+    border:2px solid #000;
+    border-radius:5px;
+}
+
+button{
+    margin-top:30px;
+    padding:12px 40px;
+    font-size:32px;
+    font-weight:bold;
+    cursor:pointer;
+    border:none;
+    border-radius:8px;
+    background:#000;
+    color:white;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.result{
+    margin-top:60px;
+    display:flex;
+    justify-content:center;
+}
+
+table{
+    border-spacing:20px 25px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+td{
+    text-align:left;
+}
+
+.value{
+    min-width:120px;
+    text-align:right;
+}
+
+.whatsapp-btn{
+    display:none;
+    margin-top:30px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    padding:15px 25px;
+    border-radius:8px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+h1{
+    font-size:45px;
+}
+
+h2{
+    font-size:28px;
+}
+
+input{
+    width:90%;
+    font-size:20px;
+}
+
+button{
+    font-size:24px;
+}
+
+table{
+    font-size:20px;
+}
+}
 </style>
 </head>
+
 <body>
 
-<h2>Loan Mitra Project Report Calculator</h2>
+<div class="container">
 
-<input type="number" id="loan" placeholder="Enter Loan Amount">
+<h1>Loan Mitra</h1>
+
+<h2>Project Report Calculator</h2>
+
+<input type="number" id="loan" placeholder="Enter Desired Amount">
+
+<br>
 
 <button onclick="calculate()">Calculate</button>
 
 <div class="result">
-<p><b>Project Report Fee:</b> ₹<span id="fee">0</span></p>
-<p><b>GST (18%):</b> ₹<span id="gst">0</span></p>
-<p><b>Total:</b> ₹<span id="total">0</span></p>
+<table>
+
+<tr>
+<td>Project Report Fee</td>
+<td>:</td>
+<td class="value" id="fee">0</td>
+</tr>
+
+<tr>
+<td>GST (18%)</td>
+<td>:</td>
+<td class="value" id="gst">0</td>
+</tr>
+
+<tr>
+<td>Total</td>
+<td>:</td>
+<td class="value" id="total">0</td>
+</tr>
+
+</table>
+</div>
+
+<a id="waBtn"
+class="whatsapp-btn"
+target="_blank">
+Apply on WhatsApp
+</a>
+
 </div>
 
 <script>
+
 function calculate(){
-let loan=parseFloat(document.getElementById("loan").value)||0;
 
-let fee=Math.round(Math.max(3000,3000+((loan-100000)*22000/4900000)));
-let gst=Math.round(fee*0.18);
-let total=fee+gst;
+let loan = parseFloat(document.getElementById("loan").value);
 
-document.getElementById("fee").innerText=fee.toLocaleString();
-document.getElementById("gst").innerText=gst.toLocaleString();
-document.getElementById("total").innerText=total.toLocaleString();
+if(!loan || loan <= 0){
+alert("Please enter loan amount");
+return;
 }
+
+let fee = Math.round(
+Math.max(
+3000,
+3000 + ((loan - 100000) * 22000 / 4900000)
+)
+);
+
+let gst = Math.round(fee * 0.18);
+let total = fee + gst;
+
+document.getElementById("fee").innerHTML =
+fee.toLocaleString('en-IN');
+
+document.getElementById("gst").innerHTML =
+gst.toLocaleString('en-IN');
+
+document.getElementById("total").innerHTML =
+total.toLocaleString('en-IN');
+
+let msg =
+"Loan Mitra Inquiry%0A%0A" +
+"Loan Amount: ₹" + loan.toLocaleString('en-IN') + "%0A" +
+"Project Report Fee: ₹" + fee.toLocaleString('en-IN') + "%0A" +
+"GST: ₹" + gst.toLocaleString('en-IN') + "%0A" +
+"Total: ₹" + total.toLocaleString('en-IN');
+
+let waLink =
+"https://wa.me/918051656696?text=" + msg;
+
+let waBtn = document.getElementById("waBtn");
+
+waBtn.href = waLink;
+waBtn.style.display = "inline-block";
+}
+
 </script>
 
 </body>
