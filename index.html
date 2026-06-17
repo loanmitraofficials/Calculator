@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -101,11 +100,8 @@ h2{font-size:20px;}
 <h2>Project Report Calculator</h2>
 
 <input type="text" id="name" placeholder="Enter Name">
-
 <input type="text" id="state" placeholder="Enter State">
-
 <input type="text" id="district" placeholder="Enter District">
-
 <input type="number" id="loan" placeholder="Enter Desired Loan Amount">
 
 <button onclick="calculate()">Calculate</button>
@@ -149,15 +145,32 @@ alert("Please fill all details");
 return;
 }
 
-let fee=Math.round(
-Math.max(
-3000,
-3000+((loan-100000)*22000/4900000)
-)
-);
+/* ✅ NEW SLAB SYSTEM */
+let fee;
 
-let gst=Math.round(fee*0.18);
-let total=fee+gst;
+if (loan <= 500000) {
+    fee = 3000 + ((loan / 500000) * 2000);
+}
+else if (loan <= 1000000) {
+    fee = 5000 + ((loan - 500000) / 500000) * 5000;
+}
+else if (loan <= 2500000) {
+    fee = 10000 + ((loan - 1000000) / 1500000) * 5000;
+}
+else if (loan <= 5000000) {
+    fee = 15000 + ((loan - 2500000) / 2500000) * 10000;
+}
+else if (loan <= 10000000) {
+    fee = 25000 + ((loan - 5000000) / 5000000) * 15000;
+}
+else {
+    fee = 40000 + ((loan - 10000000) / 40000000) * 60000;
+}
+
+fee = Math.round(fee);
+
+let gst = Math.round(fee * 0.18);
+let total = fee + gst;
 
 document.getElementById("fee").innerHTML="₹"+fee.toLocaleString('en-IN');
 document.getElementById("gst").innerHTML="₹"+gst.toLocaleString('en-IN');
