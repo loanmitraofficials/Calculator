@@ -145,17 +145,17 @@ alert("Please fill all details");
 return;
 }
 
-/* ✅ NEW SLAB SYSTEM */
+/* ✅ SMOOTH FEE SYSTEM (NO JUMP MODEL) */
 let fee;
 
 if (loan <= 500000) {
-    fee = 3000 + ((loan / 500000) * 2000);
+    fee = 3000 + (loan / 500000) * 2000;
 }
 else if (loan <= 1000000) {
-    fee = 5000 + ((loan - 500000) / 500000) * 5000;
+    fee = 5000 + ((loan - 500000) / 500000) * 2000;
 }
 else if (loan <= 2500000) {
-    fee = 10000 + ((loan - 1000000) / 1500000) * 5000;
+    fee = 7000 + ((loan - 1000000) / 1500000) * 8000;
 }
 else if (loan <= 5000000) {
     fee = 15000 + ((loan - 2500000) / 2500000) * 10000;
@@ -169,13 +169,16 @@ else {
 
 fee = Math.round(fee);
 
+/* GST */
 let gst = Math.round(fee * 0.18);
 let total = fee + gst;
 
+/* DISPLAY */
 document.getElementById("fee").innerHTML="₹"+fee.toLocaleString('en-IN');
 document.getElementById("gst").innerHTML="₹"+gst.toLocaleString('en-IN');
 document.getElementById("total").innerHTML="₹"+total.toLocaleString('en-IN');
 
+/* WHATSAPP MESSAGE */
 let msg =
 "*Loan Mitra New Inquiry*%0A%0A"+
 "Name: "+name+"%0A"+
@@ -192,6 +195,7 @@ let whatsappLink =
 let sendBtn=document.getElementById("sendBtn");
 sendBtn.href=whatsappLink;
 sendBtn.style.display="block";
+
 }
 
 </script>
